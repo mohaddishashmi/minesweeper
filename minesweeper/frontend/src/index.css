@@ -1,3 +1,4 @@
+/* Pre-Included CSS from create-react-app */
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
@@ -10,4 +11,138 @@ body {
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+
+/* Difficulty Selector CSS */
+.difficulty-selector {
+  display: flex;
+  flex-direction: column;
+  /* Stack elements vertically */
+  justify-content: center;
+  /* Center content vertically */
+  align-items: center;
+  /* Center content horizontally */
+  height: 100vh;
+  /* Make the container take up full height */
+  text-align: center;
+}
+
+.button-container {
+  display: flex;
+  flex-direction: column;
+  /* Arrange buttons in a column */
+  gap: 10px;
+  /* Add spacing between buttons */
+}
+
+button {
+  width: 150px;
+  padding: 10px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+/* Gameboard Page CSS */
+
+body {
+  background-color: white;
+  margin: 0;
+  font-family: Arial, sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+
+/* Centers the game */
+.game-container {
+  text-align: center;
+  background-color: white;
+  /* Make sure the background is white */
+  padding: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+}
+/* Minesweeper board */
+.game-board {
+  display: inline-block;
+  border: 5px solid #777;
+  background: #bdbdbd;
+  padding: 5px;
+  box-shadow: inset 2px 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+/* Board row styling */
+.board-row {
+  display: flex;
+}
+
+/* Minesweeper tile styling */
+.tile {
+  width: 30px;
+  height: 30px;
+  border: 2px solid #7b7b7b;
+  background: #c0c0c0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  font-weight: bold;
+  cursor: pointer;
+  user-select: none;
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+/* Raised button effect before clicking */
+.tile:not(.revealed) {
+  border-top: 3px solid #ffffff;
+  border-left: 3px solid #ffffff;
+  border-bottom: 3px solid #7b7b7b;
+  border-right: 3px solid #7b7b7b;
+}
+
+/* Clicked (revealed) tile */
+.tile.revealed {
+  background: #dcdcdc;
+  border: 2px solid #a0a0a0;
+  box-shadow: inset 2px 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+/* Minesweeper number colors */
+.tile.revealed:contains("1") {
+  color: blue;
+}
+
+.tile.revealed:contains("2") {
+  color: green;
+}
+
+.tile.revealed:contains("3") {
+  color: red;
+}
+
+.tile.revealed:contains("4") {
+  color: navy;
+}
+
+.tile.revealed:contains("5") {
+  color: brown;
+}
+
+.tile.revealed:contains("6") {
+  color: cyan;
+}
+
+.tile.revealed:contains("7") {
+  color: black;
+}
+
+.tile.revealed:contains("8") {
+  color: gray;
+}
+
+/* Hover effect */
+.tile:not(.revealed):hover {
+  background: #e0e0e0;
 }
