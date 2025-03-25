@@ -88,9 +88,10 @@ app.get("/api/start-game", (req, res) => {
     //generate board, all non-revealed spaces for now
     let board = generateBoard(size, mines);
     let revealed = Array(size).fill().map(() => Array(size).fill(false));
-    const gameID = (""+Math.random()).substring(2,7) //random 5 digit #
-    games[gameID] = {board, revealed, size, gameOVer: false}
-    res.json({ board: games[gameID].revealed, size});
+    const gameID = Date.now().toString(); // Uses the current timestamp as a unique ID
+    games[gameID] = {board, revealed, size, gameOver: false}
+   
+    res.json({ board: games[gameID].revealed, size, gameID});
 });
 
 // Endpoint for handling tile guesses (e.g., clicking a tile)

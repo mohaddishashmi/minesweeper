@@ -1,10 +1,16 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef} from "react";
 
-export default function GameBoard({ difficulty }) {
+export default function Board({ difficulty, gameID }) {
   const [board, setBoard] = useState([]);
   const [revealed, setRevealed] = useState([]);
+  const isFirstRender = useRef(true);
 
   useEffect(() => {
+    if (isFirstRender.current) {
+      isFirstRender.current = false;
+      return; // Skip the first duplicate render
+    }
+
     fetch(`http://localhost:5000/api/start-game?difficulty=${difficulty}`)
       .then((res) => res.json())
       .then((data) => {
@@ -20,16 +26,22 @@ export default function GameBoard({ difficulty }) {
   }, [difficulty]);
 
   const handleTileClick = (x, y) => {
+
     fetch("http://localhost:5000/api/tile-click", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ x, y }),
+      body: JSON.stringify({ gameID, x, y }), // Include gameID
     })
       .then((res) => res.json())
       .then((data) => {
-        if (data.message === "Game Over") {
+        if (data.error) {
+          console.error("Error:", data.error);
+          return;
+        }
+
+        if (data.gameOver) {
           alert("Game Over! You clicked on a mine.");
         }
 
@@ -39,8 +51,10 @@ export default function GameBoard({ difficulty }) {
           newRevealed[x][y] = true;
           return [...newRevealed];
         });
-      });
+      })
+      .catch((err) => console.error("Fetch error:", err));
   };
+
 
   return (
     <div className="game-container">
