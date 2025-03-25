@@ -13,33 +13,76 @@ code {
     monospace;
 }
 
+
+/* Header Styling */
+.header {
+  background-color: #333;
+  color: white;
+  text-align: center;
+  padding: 20px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  /* Make sure the header stays on top */
+}
+
+.header h1 {
+  margin: 0;
+  font-size: 32px;
+}
+
 /* Difficulty Selector CSS */
 .difficulty-selector {
   display: flex;
   flex-direction: column;
-  /* Stack elements vertically */
   justify-content: center;
-  /* Center content vertically */
   align-items: center;
-  /* Center content horizontally */
-  height: 100vh;
-  /* Make the container take up full height */
+  height: 100%;
+  /* Adjust height to not stretch to full viewport */
   text-align: center;
+  box-sizing: border-box;
 }
 
 .button-container {
   display: flex;
   flex-direction: column;
-  /* Arrange buttons in a column */
-  gap: 10px;
-  /* Add spacing between buttons */
+  gap: 20px;
+  /* Increase gap between buttons */
 }
-
+.difficulty-option {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  /* Center the button and description */
+}
 button {
-  width: 150px;
   padding: 10px;
+  /* Reduce padding to be uniform */
   font-size: 16px;
   cursor: pointer;
+  border: none;
+  border-radius: 5px;
+  background-color: #4CAF50;
+  color: white;
+  transition: background-color 0.3s ease;
+
+  /* Set button size directly */
+  width: 150px;
+  /* Adjust to preferred button width */
+  height: 50px;
+  /* Adjust to preferred button height */
+}
+
+button:hover {
+  background-color: #45a049;
+}
+
+.difficulty-description {
+  margin-top: 5px;
+  font-size: 14px;
+  color: #555;
 }
 
 /* Gameboard Page CSS */
@@ -59,6 +102,7 @@ body {
 .game-container {
   text-align: center;
   background-color: white;
+  
   /* Make sure the background is white */
   padding: 20px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);

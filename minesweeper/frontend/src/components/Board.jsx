@@ -44,7 +44,6 @@ export default function GameBoard({ difficulty }) {
 
   return (
     <div className="game-container">
-      <h2>Minesweeper</h2>
       <div
         className="game-board"
         style={{
