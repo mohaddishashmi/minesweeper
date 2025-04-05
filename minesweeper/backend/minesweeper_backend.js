@@ -90,8 +90,12 @@ app.get("/api/start-game", (req, res) => {
     let revealed = Array(size).fill().map(() => Array(size).fill(false));
     const gameID = Date.now().toString(); // Uses the current timestamp as a unique ID
     games[gameID] = {board, revealed, size, gameOver: false}
-   
-    res.json({ board: games[gameID].revealed, size, gameID});
+    console.log("GameID:", gameID);
+    console.log("_______________________________________________")
+    console.log(board.map(row => row.join(" ")).join("\n")); // Logs grid-style board
+    console.log("_______________________________________________")
+
+    res.json({ board: games[gameID].board, revealed: games[gameID].revealed, size, gameID});
 });
 
 // Endpoint for handling tile guesses (e.g., clicking a tile)
@@ -111,7 +115,17 @@ app.post("/api/tile-click", (req, res) => {
     //if mine, end game
     if (game.board[x][y] === "M") {
         game.gameOver = true;
-        return res.json({ board: game.board, gameOver: true });
+    // leave "0-adjacent" squares as blank
+    for (let i = 0; i < game.size; i++) {
+      for (let j = 0; j < game.size; j++) {
+        if (game.board[i][j] === 0) {
+          game.revealed[i][j] = false;  // Leave 0-adjacent cells hidden
+        } else {
+          game.revealed[i][j] = true;  // Reveal all other cells
+        }
+      }
+    }
+        return res.json({ board: game.revealed, gameOver: true });
     }
     //else, we clicked a non-mine square. reveal recursively
     floodReveal(game, x, y);

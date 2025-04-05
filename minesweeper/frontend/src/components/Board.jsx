@@ -1,38 +1,19 @@
-import React, { useState, useEffect, useRef} from "react";
+import React from "react";
 
-export default function Board({ difficulty, gameID }) {
-  const [board, setBoard] = useState([]);
-  const [revealed, setRevealed] = useState([]);
-  const isFirstRender = useRef(true);
-
-  useEffect(() => {
-    if (isFirstRender.current) {
-      isFirstRender.current = false;
-      return; // Skip the first duplicate render
-    }
-
-    fetch(`http://localhost:5000/api/start-game?difficulty=${difficulty}`)
-      .then((res) => res.json())
-      .then((data) => {
-        setBoard(data.board);
-
-        // Initialize revealed state (matching board size)
-        setRevealed(
-          Array(data.size)
-            .fill()
-            .map(() => Array(data.size).fill(false))
-        );
-      });
-  }, [difficulty]);
-
+export default function Board({
+  difficulty,
+  gameID,
+  board,
+  revealed,
+  setRevealed,
+}) {
   const handleTileClick = (x, y) => {
-
     fetch("http://localhost:5000/api/tile-click", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ gameID, x, y }), // Include gameID
+      body: JSON.stringify({ gameID, x, y }),
     })
       .then((res) => res.json())
       .then((data) => {
@@ -45,14 +26,15 @@ export default function Board({ difficulty, gameID }) {
           alert("Game Over! You clicked on a mine.");
         }
 
-        // Update revealed state (for UI)
-        setRevealed((prevRevealed) => {
-          const newRevealed = [...prevRevealed];
-          newRevealed[x][y] = true;
-          return [...newRevealed];
-        });
+        setRevealed(data.board); // update the entire revealed board
       })
       .catch((err) => console.error("Fetch error:", err));
+  };
+
+  const renderCellContent = (cell) => {
+    if (cell === "M") return "💣";
+    if (cell === 0) return "";
+    return String(cell);
   };
 
 
@@ -71,12 +53,11 @@ export default function Board({ difficulty, gameID }) {
             <button
               key={`${rowIndex}-${colIndex}`}
               className={`tile ${
-                revealed[rowIndex][colIndex] ? "revealed" : ""
+                revealed[rowIndex][colIndex] ? `revealed number-${cell}` : ""
               }`}
               onClick={() => handleTileClick(rowIndex, colIndex)}
             >
-              {revealed[rowIndex][colIndex] &&
-                (cell === "M" ? "💣" : cell !== 0 ? cell : "")}
+              {revealed[rowIndex][colIndex] && renderCellContent(cell)}
             </button>
           ))
         )}

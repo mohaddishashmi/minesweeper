@@ -154,35 +154,35 @@ body {
 }
 
 /* Minesweeper number colors */
-.tile.revealed:contains("1") {
+.number-1 {
   color: blue;
 }
 
-.tile.revealed:contains("2") {
+.number-2 {
   color: green;
 }
 
-.tile.revealed:contains("3") {
+.number-3 {
   color: red;
 }
 
-.tile.revealed:contains("4") {
+.number-4 {
   color: navy;
 }
 
-.tile.revealed:contains("5") {
+.number-5 {
   color: brown;
 }
 
-.tile.revealed:contains("6") {
+.number-6 {
   color: cyan;
 }
 
-.tile.revealed:contains("7") {
+.number-7 {
   color: black;
 }
 
-.tile.revealed:contains("8") {
+.number-8 {
   color: gray;
 }
 
