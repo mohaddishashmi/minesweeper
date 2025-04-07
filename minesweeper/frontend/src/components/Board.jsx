@@ -26,9 +26,6 @@ export default function Board({
           console.error("Error:", data.error);
           return;
         }
-
-     
-
         setRevealed(data.board); // update the entire revealed board
 
            if (data.gameOver) {
@@ -68,11 +65,12 @@ export default function Board({
               key={`${rowIndex}-${colIndex}`}
               className={`tile ${
                 revealed[rowIndex][colIndex] ? `revealed number-${cell}` : ""
-              }`}
+              } ${!revealed[rowIndex][colIndex] && gameOver ? "disabled" : ""}`}
               onClick={() => handleTileClick(rowIndex, colIndex)}
-              disabled = {gameOver}
+              disabled={gameOver && !revealed[rowIndex][colIndex]}
             >
-              {revealed[rowIndex][colIndex] && renderCellContent(cell, rowIndex, colIndex)}
+              {revealed[rowIndex][colIndex] &&
+                renderCellContent(cell, rowIndex, colIndex)}
             </button>
           ))
         )}

@@ -115,17 +115,15 @@ app.post("/api/tile-click", (req, res) => {
     //if mine, end game
     if (game.board[x][y] === "M") {
         game.gameOver = true;
-    // leave "0-adjacent" squares as blank
+    // Reveal all mines
     for (let i = 0; i < game.size; i++) {
       for (let j = 0; j < game.size; j++) {
-        if (game.board[i][j] === 0) {
-          game.revealed[i][j] = false;  // Leave 0-adjacent cells hidden
-        } else {
-          game.revealed[i][j] = true;  // Reveal all other cells
+        if(game.board[i][j] === "M") {
+            game.revealed[i][j] = true;
         }
       }
     }
-        return res.json({ board: game.revealed, gameOver: true });
+        return res.json({ board: game.revealed, gameOver: true, clickedMine: [x,y] });
     }
     //else, we clicked a non-mine square. reveal recursively
     floodReveal(game, x, y);

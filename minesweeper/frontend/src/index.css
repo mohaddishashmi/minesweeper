@@ -151,14 +151,23 @@ body {
   background: #dcdcdc;
   border: 2px solid #a0a0a0;
   box-shadow: inset 2px 2px 5px rgba(0, 0, 0, 0.2);
+  pointer-events: none;
+
 }
 .tile:disabled {
   cursor: default;
+  /* Make cursor non-clickable */
+  opacity: 0.5;
+  /* Optional: visually indicate disabled state */
   pointer-events: none;
-  opacity: 0.8;
-  /* Optional: visually indicate it's disabled */
+  /* Prevent interaction */
 }
 
+/* Optionally, if you want to visually indicate non-clickable tiles after game over */
+.disabled {
+  background-color: #e0e0e0;
+  /* Change color to indicate disabled state */
+}
 /* Minesweeper number colors */
 .number-1 {
   color: blue;
