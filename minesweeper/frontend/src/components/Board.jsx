@@ -6,8 +6,13 @@ export default function Board({
   board,
   revealed,
   setRevealed,
+  gameOver,
+  setGameOver,
+  clickedMine,
+  setClickedMine
 }) {
   const handleTileClick = (x, y) => {
+    if (gameOver) return;
     fetch("http://localhost:5000/api/tile-click", {
       method: "POST",
       headers: {
@@ -22,17 +27,26 @@ export default function Board({
           return;
         }
 
-        if (data.gameOver) {
-          alert("Game Over! You clicked on a mine.");
-        }
+     
 
         setRevealed(data.board); // update the entire revealed board
+
+           if (data.gameOver) {
+             setClickedMine([x, y]);
+             setGameOver(true);
+           }
       })
       .catch((err) => console.error("Fetch error:", err));
   };
 
-  const renderCellContent = (cell) => {
-    if (cell === "M") return "💣";
+  const renderCellContent = (cell, x, y) => {
+
+   if (cell === "M") {
+     if (clickedMine && clickedMine[0] === x && clickedMine[1] === y) {
+       return "❌"; // Clicked mine
+     }
+     return "💣"; // Other mines
+   }
     if (cell === 0) return "";
     return String(cell);
   };
@@ -56,8 +70,9 @@ export default function Board({
                 revealed[rowIndex][colIndex] ? `revealed number-${cell}` : ""
               }`}
               onClick={() => handleTileClick(rowIndex, colIndex)}
+              disabled = {gameOver}
             >
-              {revealed[rowIndex][colIndex] && renderCellContent(cell)}
+              {revealed[rowIndex][colIndex] && renderCellContent(cell, rowIndex, colIndex)}
             </button>
           ))
         )}

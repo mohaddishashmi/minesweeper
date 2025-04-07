@@ -152,6 +152,12 @@ body {
   border: 2px solid #a0a0a0;
   box-shadow: inset 2px 2px 5px rgba(0, 0, 0, 0.2);
 }
+.tile:disabled {
+  cursor: default;
+  pointer-events: none;
+  opacity: 0.8;
+  /* Optional: visually indicate it's disabled */
+}
 
 /* Minesweeper number colors */
 .number-1 {

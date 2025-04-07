@@ -8,6 +8,9 @@ export default function App() {
   const [gameID, setGameID] = useState(null);
   const [board, setBoard] = useState([]);
   const [revealed, setRevealed] = useState([]);
+  const [gameOver, setgameOver] = useState(false);
+  const [clickedMine, setClickedMine] = useState(null);
+
 
   const startGame = async (selectedDifficulty) => {
     try {
@@ -20,6 +23,8 @@ export default function App() {
       setDifficulty(selectedDifficulty);
       setBoard(data.board); // stores actual board values like numbers and "M"
       setRevealed(data.revealed); // stores visibility of each tile
+      setgameOver(false);
+      setClickedMine(null);
     } catch (error) {
       console.error("Error starting game:", error);
     }
@@ -32,12 +37,17 @@ export default function App() {
         {!difficulty ? (
           <DifficultySelector setDifficulty={startGame} />
         ) : (
+          //pass down board with all props
           <Board
             difficulty={difficulty}
             gameID={gameID}
             board={board}
             revealed={revealed}
             setRevealed={setRevealed}
+            gameOver={gameOver}
+            setgameOver={setgameOver}
+            clickedMine={clickedMine}
+            setClickedMine={setClickedMine}
           />
         )}
       </div>
