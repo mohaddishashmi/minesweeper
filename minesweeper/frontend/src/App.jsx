@@ -8,7 +8,7 @@ export default function App() {
   const [gameID, setGameID] = useState(null);
   const [board, setBoard] = useState([]);
   const [revealed, setRevealed] = useState([]);
-  const [gameOver, setgameOver] = useState(false);
+  const [gameOver, setGameOver] = useState(false);
   const [clickedMine, setClickedMine] = useState(null);
 
 
@@ -23,13 +23,24 @@ export default function App() {
       setDifficulty(selectedDifficulty);
       setBoard(data.board); // stores actual board values like numbers and "M"
       setRevealed(data.revealed); // stores visibility of each tile
-      setgameOver(false);
+      setGameOver(false);
       setClickedMine(null);
     } catch (error) {
       console.error("Error starting game:", error);
     }
   };
 
+  const handleRestartGame = () => {
+    startGame(difficulty);
+  }
+  const handleReturnToMenu = () => {
+    setDifficulty(null);
+    setGameOver(false);
+    setGameID(null);
+    setBoard([]);
+    setRevealed([]);
+    setClickedMine(null);
+  }
   return (
     <div>
       <Header />
@@ -37,6 +48,7 @@ export default function App() {
         {!difficulty ? (
           <DifficultySelector setDifficulty={startGame} />
         ) : (
+ 
           //pass down board with all props
           <Board
             difficulty={difficulty}
@@ -45,10 +57,13 @@ export default function App() {
             revealed={revealed}
             setRevealed={setRevealed}
             gameOver={gameOver}
-            setgameOver={setgameOver}
+            setGameOver={setGameOver}
             clickedMine={clickedMine}
             setClickedMine={setClickedMine}
+            onReturnToMenu={handleReturnToMenu}
+            onRestartGame={handleRestartGame}
           />
+          
         )}
       </div>
     </div>

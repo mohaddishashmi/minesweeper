@@ -154,20 +154,21 @@ body {
   pointer-events: none;
 
 }
+
 .tile:disabled {
-  cursor: default;
-  /* Make cursor non-clickable */
-  opacity: 0.5;
-  /* Optional: visually indicate disabled state */
   pointer-events: none;
-  /* Prevent interaction */
+  cursor: default;
+  opacity: 0.6;
 }
 
-/* Optionally, if you want to visually indicate non-clickable tiles after game over */
-.disabled {
+.tile.disabled {
+  pointer-events: none;
+  cursor: default;
+  opacity: 0.6;
   background-color: #e0e0e0;
-  /* Change color to indicate disabled state */
+  /* Optional: disabled look */
 }
+
 /* Minesweeper number colors */
 .number-1 {
   color: blue;
@@ -204,4 +205,18 @@ body {
 /* Hover effect */
 .tile:not(.revealed):hover {
   background: #e0e0e0;
+}
+
+/* Game Over Banner CSS */
+
+.game-over-banner{
+  display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 20px;
+    height: 100%;
+    /* Adjust height to not stretch to full viewport */
+    text-align: center;
+    box-sizing: border-box;
 }

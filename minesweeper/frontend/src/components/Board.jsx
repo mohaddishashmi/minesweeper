@@ -1,4 +1,5 @@
 import React from "react";
+import GameOverBanner from "./GameOverBanner";
 
 export default function Board({
   difficulty,
@@ -9,7 +10,9 @@ export default function Board({
   gameOver,
   setGameOver,
   clickedMine,
-  setClickedMine
+  setClickedMine,
+  onReturnToMenu,
+  onRestartGame
 }) {
   const handleTileClick = (x, y) => {
     if (gameOver) return;
@@ -27,7 +30,6 @@ export default function Board({
           return;
         }
         setRevealed(data.board); // update the entire revealed board
-
            if (data.gameOver) {
              setClickedMine([x, y]);
              setGameOver(true);
@@ -50,30 +52,42 @@ export default function Board({
 
 
   return (
-    <div className="game-container">
-      <div
-        className="game-board"
-        style={{
-          display: "grid",
-          gridTemplateColumns: `repeat(${board.length}, 30px)`,
-          gap: "2px",
-        }}
-      >
-        {board.map((row, rowIndex) =>
-          row.map((cell, colIndex) => (
-            <button
-              key={`${rowIndex}-${colIndex}`}
-              className={`tile ${
-                revealed[rowIndex][colIndex] ? `revealed number-${cell}` : ""
-              } ${!revealed[rowIndex][colIndex] && gameOver ? "disabled" : ""}`}
-              onClick={() => handleTileClick(rowIndex, colIndex)}
-              disabled={gameOver && !revealed[rowIndex][colIndex]}
-            >
-              {revealed[rowIndex][colIndex] &&
-                renderCellContent(cell, rowIndex, colIndex)}
-            </button>
-          ))
-        )}
+    <div>
+      {gameOver && (<GameOverBanner 
+      onReturnToMenu={onReturnToMenu}
+      onRestartGame={onRestartGame}
+      />)}
+      <div className="game-container">
+        <div
+          className="game-board"
+          style={{
+            display: "grid",
+            gridTemplateColumns: `repeat(${board.length}, 30px)`,
+            gap: "2px",
+          }}
+        >
+          {board.map((row, rowIndex) =>
+            row.map((cell, colIndex) => (
+              <button
+                key={`${rowIndex}-${colIndex}`}
+                className={`tile ${
+                  revealed[rowIndex][colIndex] ? `revealed number-${cell}` : ""
+                } ${
+                  gameOver && !revealed[rowIndex][colIndex] ? "disabled" : ""
+                }`}
+                onClick={() => {
+                  if (!gameOver && !revealed[rowIndex][colIndex]) {
+                    handleTileClick(rowIndex, colIndex);
+                  }
+                }}
+                disabled={gameOver && !revealed[rowIndex][colIndex]}
+              >
+                {revealed[rowIndex][colIndex] &&
+                  renderCellContent(cell, rowIndex, colIndex)}
+              </button>
+            ))
+          )}
+        </div>
       </div>
     </div>
   );

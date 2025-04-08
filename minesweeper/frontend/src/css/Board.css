@@ -1,0 +1,122 @@
+/* Gameboard Page CSS */
+
+body {
+    background-color: white;
+    margin: 0;
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+
+/* Centers the game */
+.game-container {
+    text-align: center;
+    background-color: white;
+
+    /* Make sure the background is white */
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+}
+
+/* Minesweeper board */
+.game-board {
+    display: inline-block;
+    border: 5px solid #777;
+    background: #bdbdbd;
+    padding: 5px;
+    box-shadow: inset 2px 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+/* Board row styling */
+.board-row {
+    display: flex;
+}
+
+/* Minesweeper tile styling */
+.tile {
+    width: 30px;
+    height: 30px;
+    border: 2px solid #7b7b7b;
+    background: #c0c0c0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+    user-select: none;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+/* Raised button effect before clicking */
+.tile:not(.revealed) {
+    border-top: 3px solid #ffffff;
+    border-left: 3px solid #ffffff;
+    border-bottom: 3px solid #7b7b7b;
+    border-right: 3px solid #7b7b7b;
+}
+
+/* Clicked (revealed) tile */
+.tile.revealed {
+    background: #dcdcdc;
+    border: 2px solid #a0a0a0;
+    box-shadow: inset 2px 2px 5px rgba(0, 0, 0, 0.2);
+    pointer-events: none;
+
+}
+
+.tile:disabled {
+    pointer-events: none;
+    cursor: default;
+    opacity: 0.6;
+}
+
+.tile.disabled {
+    pointer-events: none;
+    cursor: default;
+    opacity: 0.6;
+    background-color: #e0e0e0;
+    /* Optional: disabled look */
+}
+
+/* Minesweeper number colors */
+.number-1 {
+    color: blue;
+}
+
+.number-2 {
+    color: green;
+}
+
+.number-3 {
+    color: red;
+}
+
+.number-4 {
+    color: navy;
+}
+
+.number-5 {
+    color: brown;
+}
+
+.number-6 {
+    color: cyan;
+}
+
+.number-7 {
+    color: black;
+}
+
+.number-8 {
+    color: gray;
+}
+
+/* Hover effect */
+.tile:not(.revealed):hover {
+    background: #e0e0e0;
+}
