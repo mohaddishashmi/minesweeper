@@ -33,8 +33,14 @@ export default function Board({
         }
         setRevealed(data.board); // update the entire revealed board
            if (data.gameOver) {
-             setClickedMine([x, y]);
-             setGameOver(true);
+            setGameOver(true);
+
+            if(data.clickedMine){
+            setClickedMine([x, y]);
+            }
+            else if (data.gameWon){
+              alert("YOU WIN!");
+            }
            }
       })
       .catch((err) => console.error("Fetch error:", err));

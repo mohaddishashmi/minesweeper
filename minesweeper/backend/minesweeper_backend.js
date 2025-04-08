@@ -89,7 +89,7 @@ app.get("/api/start-game", (req, res) => {
     let board = generateBoard(size, mines);
     let revealed = Array(size).fill().map(() => Array(size).fill(false));
     const gameID = Date.now().toString(); // Uses the current timestamp as a unique ID
-    games[gameID] = {board, revealed, size, gameOver: false}
+    games[gameID] = {board, revealed, size, mines, gameOver: false}
     console.log("GameID:", gameID);
     console.log("_______________________________________________")
     console.log(board.map(row => row.join(" ")).join("\n")); // Logs grid-style board
@@ -128,6 +128,18 @@ app.post("/api/tile-click", (req, res) => {
     //else, we clicked a non-mine square. reveal recursively
     floodReveal(game, x, y);
 
+    //check if we won the game
+    let revealedCount = 0;
+    for(let i = 0; i < game.size; i ++){
+        for(let j = 0; j < game.size; j ++){
+            if(game.revealed[i][j]) revealedCount ++;
+        }
+    }
+    //gamewin case
+    if(((game.size * game.size) - game.mines) === revealedCount){
+        game.gameOver = true;
+        return res.json({board: game.revealed, gameOver: true, gameWon: true});
+    }
     //communicate API response back
 
     res.json({ board: game.revealed, gameOver: game.gameOver });
