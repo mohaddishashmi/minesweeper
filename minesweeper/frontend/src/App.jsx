@@ -11,6 +11,7 @@ export default function App() {
   const [gameOver, setGameOver] = useState(false);
   const [clickedMine, setClickedMine] = useState(null);
   const [flags, setFlags] = useState([])
+  const [hasWon, setHasWon] = useState(false);
 
   //start game API call
   const startGame = async (selectedDifficulty) => {
@@ -28,6 +29,7 @@ export default function App() {
       setFlags(Array(size).fill().map(() => Array(size).fill(false))); //no flags on screen to start
       setGameOver(false);
       setClickedMine(null);
+      setHasWon(false);
     } catch (error) {
       console.error("Error starting game:", error);
     }
@@ -67,6 +69,8 @@ export default function App() {
             setClickedMine={setClickedMine}
             onReturnToMenu={handleReturnToMenu}
             onRestartGame={handleRestartGame}
+            hasWon={hasWon}
+            setHasWon={setHasWon}
           />
           
         )}

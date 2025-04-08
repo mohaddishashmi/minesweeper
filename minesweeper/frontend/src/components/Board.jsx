@@ -14,7 +14,9 @@ export default function Board({
   clickedMine,
   setClickedMine,
   onReturnToMenu,
-  onRestartGame
+  onRestartGame,
+  hasWon,
+  setHasWon
 }) {
   const handleTileClick = (x, y) => {
     if (gameOver) return;
@@ -40,6 +42,7 @@ export default function Board({
             }
             else if (data.gameWon){
               alert("YOU WIN!");
+              setHasWon(true);
             }
            }
       })
@@ -118,6 +121,7 @@ export default function Board({
         <GameOverBanner
           onReturnToMenu={onReturnToMenu}
           onRestartGame={onRestartGame}
+          hasWon={hasWon}
         />
       )}
     </div>
