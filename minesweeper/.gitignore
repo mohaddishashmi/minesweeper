@@ -6,6 +6,9 @@
 /.pnp
 .pnp.js
 
+#zip files
+backend.zip
+
 # testing
 /coverage
 
