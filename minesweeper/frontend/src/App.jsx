@@ -10,19 +10,22 @@ export default function App() {
   const [revealed, setRevealed] = useState([]);
   const [gameOver, setGameOver] = useState(false);
   const [clickedMine, setClickedMine] = useState(null);
+  const [flags, setFlags] = useState([])
 
-
+  //start game API call
   const startGame = async (selectedDifficulty) => {
     try {
       const response = await fetch(
         `http://localhost:5000/api/start-game?difficulty=${selectedDifficulty}`
       );
       const data = await response.json();
-
+      const board = data.board;
+      const size = board.length;
       setGameID(data.gameID);
       setDifficulty(selectedDifficulty);
       setBoard(data.board); // stores actual board values like numbers and "M"
       setRevealed(data.revealed); // stores visibility of each tile
+      setFlags(Array(size).fill().map(() => Array(size).fill(false))); //no flags on screen to start
       setGameOver(false);
       setClickedMine(null);
     } catch (error) {
@@ -56,6 +59,8 @@ export default function App() {
             board={board}
             revealed={revealed}
             setRevealed={setRevealed}
+            flags = {flags}
+            setFlags={setFlags}
             gameOver={gameOver}
             setGameOver={setGameOver}
             clickedMine={clickedMine}

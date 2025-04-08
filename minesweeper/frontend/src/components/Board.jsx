@@ -9,6 +9,8 @@ export default function Board({
   setRevealed,
   gameOver,
   setGameOver,
+  flags,
+  setFlags,
   clickedMine,
   setClickedMine,
   onReturnToMenu,
@@ -38,6 +40,19 @@ export default function Board({
       .catch((err) => console.error("Fetch error:", err));
   };
 
+  const handleFlagToggle = (x,y) => {
+    if (gameOver) return;
+    const newFlags = flags.map((row, rowIndex) =>
+      row.map((flag, colIndex) => {
+        if (rowIndex === x && colIndex === y) {
+          return !flag;
+        }
+        return flag;
+      })
+    );
+    setFlags(newFlags);
+  }
+
   const renderCellContent = (cell, x, y) => {
 
    if (cell === "M") {
@@ -53,10 +68,6 @@ export default function Board({
 
   return (
     <div>
-      {gameOver && (<GameOverBanner 
-      onReturnToMenu={onReturnToMenu}
-      onRestartGame={onRestartGame}
-      />)}
       <div className="game-container">
         <div
           className="game-board"
@@ -80,15 +91,29 @@ export default function Board({
                     handleTileClick(rowIndex, colIndex);
                   }
                 }}
+                //right click for flags
+                onContextMenu={(e) => {
+                  e.preventDefault();
+                  if (!gameOver && !revealed[rowIndex][colIndex]) {
+                    handleFlagToggle(rowIndex, colIndex);
+                  }
+                }}
                 disabled={gameOver && !revealed[rowIndex][colIndex]}
               >
-                {revealed[rowIndex][colIndex] &&
-                  renderCellContent(cell, rowIndex, colIndex)}
+                {revealed[rowIndex][colIndex]
+                  ? renderCellContent(cell, rowIndex, colIndex)
+                  : !gameOver && flags[rowIndex][colIndex] && "🚩"}
               </button>
             ))
           )}
         </div>
       </div>
+      {gameOver && (
+        <GameOverBanner
+          onReturnToMenu={onReturnToMenu}
+          onRestartGame={onRestartGame}
+        />
+      )}
     </div>
   );
 }
