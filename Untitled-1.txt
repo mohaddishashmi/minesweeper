@@ -1,0 +1,4 @@
+ssh -i C:\Users\mohas\Downloads\my-first-key.pem ec2-user@3.144.7.251
+
+
+scp -i C:\Users\mohas\Downloads\my-first-key.pem -r . ec2-user@3.144.7.251:~/

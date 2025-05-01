@@ -8,7 +8,13 @@
 
 #zip files
 backend.zip
+/frontend/build
+/backend/build
 
+#docker files
+/frontend/Dockerfile
+/backend/Dockerfile
+docker-compose.yml
 # testing
 /coverage
 
